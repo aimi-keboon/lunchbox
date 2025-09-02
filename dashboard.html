@@ -1,623 +1,679 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Food Delivery</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #f8f9fa;
-            color: #333;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background: #f8f9fa;
+        color: #333;
+      }
 
-        /* Header */
-        .header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+      /* Header */
+      .header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .logo-img {
+        width: 140px;
+        height: 140px;
+        object-fit: contain;
+      }
+
+      .logo span {
+        margin-left: 0.5rem;
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #f8f9fa;
+        border-radius: 25px;
+      }
+
+      .logout-btn {
+        background: #dc3545;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.3s ease;
+      }
+
+      .logout-btn:hover {
+        background: #c82333;
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .welcome-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+      }
+
+      .welcome-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .welcome-section p {
+        opacity: 0.9;
+        font-size: 1.1rem;
+      }
+
+      /* Dashboard Cards */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .dashboard-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .dashboard-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+      }
+
+      .card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .card-content {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .card-action {
+        margin-top: 1rem;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+      }
+
+      .btn-success {
+        background: #28a745;
+      }
+
+      /* Order History */
+      .order-history {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .order-history h2 {
+        margin-bottom: 1.5rem;
+        color: #333;
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+      }
+
+      .order-details h4 {
+        margin-bottom: 0.5rem;
+      }
+
+      .order-meta {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .order-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      .status-completed {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .status-cancelled {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      /* Profile Section */
+      .profile-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .profile-info {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        font-weight: 600;
+        color: #666;
+      }
+
+      .info-value {
+        color: #333;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
         .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+          padding: 1rem;
+          flex-direction: column;
+          gap: 1rem;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .logo span {
-            margin-left: 0.5rem;
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: #f8f9fa;
-            border-radius: 25px;
-        }
-
-        .logout-btn {
-            background: #dc3545;
-            color: white;
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: #c82333;
-        }
-
-        /* Main Content */
         .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .welcome-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
+          padding: 1rem;
         }
 
         .welcome-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+          font-size: 2rem;
         }
 
-        .welcome-section p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-        }
-
-        /* Dashboard Cards */
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+          grid-template-columns: 1fr;
         }
 
-        .dashboard-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            font-size: 2rem;
-            margin-right: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .card-content {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .card-action {
-            margin-top: 1rem;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        /* Order History */
-        .order-history {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .order-history h2 {
-            margin-bottom: 1.5rem;
-            color: #333;
+        .profile-section {
+          grid-template-columns: 1fr;
         }
 
         .order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            margin-bottom: 1rem;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
         }
 
-        .order-details h4 {
-            margin-bottom: 0.5rem;
+        .user-menu {
+          flex-direction: column;
+          width: 100%;
+          text-align: center;
         }
 
-        .order-meta {
-            color: #666;
-            font-size: 0.9rem;
+        .logo {
+          width: 100%;
+          justify-content: center;
+          margin-bottom: 1rem;
         }
 
-        .order-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .logo-img {
+          width: 132px;
+          height: 132px;
         }
+      }
 
-        .status-completed {
-            background: #d4edda;
-            color: #155724;
+      /* Loading States */
+      .loading {
+        text-align: center;
+        padding: 2rem;
+        color: #666;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
+        100% {
+          transform: rotate(360deg);
         }
-
-        .status-cancelled {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        /* Profile Section */
-        .profile-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .profile-info {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #666;
-        }
-
-        .info-value {
-            color: #333;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .main-content {
-                padding: 1rem;
-            }
-
-            .welcome-section h1 {
-                font-size: 2rem;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-section {
-                grid-template-columns: 1fr;
-            }
-
-            .order-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-
-            .user-menu {
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-            }
-        }
-
-        /* Loading States */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #666;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 2s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="header">
-        <nav class="nav">
-            <div class="logo">
-                🍕 <span>Food Delivery</span>
-            </div>
-            <div class="user-menu">
-                <div class="user-info">
-                    👤 <span id="user-name">Loading...</span>
-                </div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </nav>
+      <nav class="nav">
+        <div class="logo">
+          <img src="lunchbox.png" alt="LunchBox" class="logo-img" />
+        </div>
+        <div class="user-menu">
+          <div class="user-info">👤 <span id="user-name">Loading...</span></div>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+      </nav>
     </header>
 
     <main class="main-content">
-        <!-- Welcome Section -->
-        <section class="welcome-section">
-            <h1>Welcome back!</h1>
-            <p id="welcome-message">Good to see you again. Ready to order some delicious food?</p>
-        </section>
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <h1>Welcome back!</h1>
+        <p id="welcome-message">
+          Good to see you again. Ready to order some delicious food?
+        </p>
+      </section>
 
-        <!-- Dashboard Cards -->
-        <section class="dashboard-grid">
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-icon">🍽️</div>
-                    <div class="card-title">Browse Menu</div>
-                </div>
-                <div class="card-content">
-                    Discover delicious food from restaurants in your area. Fresh ingredients, amazing flavors!
-                </div>
-                <div class="card-action">
-                    <a href="index.html" class="btn">Order Now</a>
-                </div>
-            </div>
+      <!-- Dashboard Cards -->
+      <section class="dashboard-grid">
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">🍽️</div>
+            <div class="card-title">Browse Menu</div>
+          </div>
+          <div class="card-content">
+            Discover delicious food from restaurants in your area. Fresh
+            ingredients, amazing flavors!
+          </div>
+          <div class="card-action">
+            <a href="index.html" class="btn">Order Now</a>
+          </div>
+        </div>
 
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-icon">📍</div>
-                    <div class="card-title">Delivery Address</div>
-                </div>
-                <div class="card-content">
-                    <p id="delivery-location">Loading...</p>
-                </div>
-                <div class="card-action">
-                    <button class="btn btn-secondary" onclick="updateAddress()">Update Address</button>
-                </div>
-            </div>
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">📍</div>
+            <div class="card-title">Delivery Address</div>
+          </div>
+          <div class="card-content">
+            <p id="delivery-location">Loading...</p>
+          </div>
+          <div class="card-action">
+            <button class="btn btn-secondary" onclick="updateAddress()">
+              Update Address
+            </button>
+          </div>
+        </div>
 
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-icon">🛒</div>
-                    <div class="card-title">Recent Orders</div>
-                </div>
-                <div class="card-content">
-                    <p id="order-summary">Loading order history...</p>
-                </div>
-                <div class="card-action">
-                    <button class="btn btn-secondary" onclick="showOrderHistory()">View All Orders</button>
-                </div>
-            </div>
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">🛒</div>
+            <div class="card-title">Recent Orders</div>
+          </div>
+          <div class="card-content">
+            <p id="order-summary">Loading order history...</p>
+          </div>
+          <div class="card-action">
+            <button class="btn btn-secondary" onclick="showOrderHistory()">
+              View All Orders
+            </button>
+          </div>
+        </div>
 
-            <div class="dashboard-card">
-                <div class="card-header">
-                    <div class="card-icon">⭐</div>
-                    <div class="card-title">Loyalty Points</div>
-                </div>
-                <div class="card-content">
-                    <p>You have <strong id="loyalty-points">0</strong> points!</p>
-                    <p>Earn 1 point for every RM spent.</p>
-                </div>
-                <div class="card-action">
-                    <button class="btn btn-success">Redeem Points</button>
-                </div>
-            </div>
-        </section>
+        <div class="dashboard-card">
+          <div class="card-header">
+            <div class="card-icon">⭐</div>
+            <div class="card-title">Loyalty Points</div>
+          </div>
+          <div class="card-content">
+            <p>You have <strong id="loyalty-points">0</strong> points!</p>
+            <p>Earn 1 point for every RM spent.</p>
+          </div>
+          <div class="card-action">
+            <button class="btn btn-success">Redeem Points</button>
+          </div>
+        </div>
+      </section>
 
-        <!-- Profile Information -->
-        <section class="profile-section">
-            <div class="profile-info">
-                <h2>Profile Information</h2>
-                <div class="info-row">
-                    <span class="info-label">Full Name:</span>
-                    <span class="info-value" id="profile-name">Loading...</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Email:</span>
-                    <span class="info-value" id="profile-email">Loading...</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Mobile:</span>
-                    <span class="info-value" id="profile-mobile">Loading...</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Member Since:</span>
-                    <span class="info-value" id="profile-joined">Loading...</span>
-                </div>
-                <div style="margin-top: 1rem;">
-                    <button class="btn btn-secondary">Edit Profile</button>
-                </div>
-            </div>
+      <!-- Profile Information -->
+      <section class="profile-section">
+        <div class="profile-info">
+          <h2>Profile Information</h2>
+          <div class="info-row">
+            <span class="info-label">Full Name:</span>
+            <span class="info-value" id="profile-name">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Email:</span>
+            <span class="info-value" id="profile-email">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Mobile:</span>
+            <span class="info-value" id="profile-mobile">Loading...</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Member Since:</span>
+            <span class="info-value" id="profile-joined">Loading...</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <button class="btn btn-secondary">Edit Profile</button>
+          </div>
+        </div>
 
-            <div class="order-history">
-                <h2>Order History</h2>
-                <div id="order-list">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Loading your orders...
-                    </div>
-                </div>
+        <div class="order-history">
+          <h2>Order History</h2>
+          <div id="order-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              Loading your orders...
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
     </main>
 
     <script>
-        // Google Apps Script Web App URL - Replace with your actual deployed URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzOMw8C5rsfW6WPNgrGiZ2Qs-Tn32MSQTkQU1Aoey1O56mUXipbqKSQffZVcitZjSf-wA/exec';
+      // Google Apps Script Web App URL - Replace with your actual deployed URL
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzABYrIDnqe-bwp05PMctPChln1m0klMBvLAMo9vRPx7VJyrgCH126if7HSZTehqhd4lw/exec";
 
-        let userData = null;
+      let userData = null;
 
-        function checkAuthentication() {
-            const userToken = localStorage.getItem('userToken');
-            const storedUserData = localStorage.getItem('userData');
-            
-            if (!userToken || !storedUserData) {
-                window.location.href = 'login.html';
-                return false;
-            }
-            
-            userData = JSON.parse(storedUserData);
-            return true;
+      function checkAuthentication() {
+        const userToken = localStorage.getItem("userToken");
+        const storedUserData = localStorage.getItem("userData");
+
+        if (!userToken || !storedUserData) {
+          window.location.href = "login.html";
+          return false;
         }
 
-        function loadUserData() {
-            if (!userData) return;
-            
-            // Update user name in header
-            document.getElementById('user-name').textContent = userData.name || 'User';
-            
-            // Update welcome message
-            const welcomeMsg = document.getElementById('welcome-message');
-            welcomeMsg.textContent = `Good to see you again, ${userData.name?.split(' ')[0] || 'there'}! Ready to order some delicious food?`;
-            
-            // Update profile information
-            document.getElementById('profile-name').textContent = userData.name || 'N/A';
-            document.getElementById('profile-email').textContent = userData.email || 'N/A';
-            document.getElementById('profile-mobile').textContent = 
-                `${userData.countryCode || ''} ${userData.mobile || 'N/A'}`;
-            
-            // Update delivery location
-            const deliveryLocation = document.getElementById('delivery-location');
-            if (userData.deliveryLocation === 'Others' && userData.deliveryAddress) {
-                deliveryLocation.innerHTML = `<strong>${userData.deliveryLocation}</strong><br>${userData.deliveryAddress}`;
-            } else {
-                deliveryLocation.innerHTML = `<strong>${userData.deliveryLocation || 'Not set'}</strong>`;
-            }
-            
-            // Set member since date (use current date if not available)
-            const joinedDate = userData.joinedDate || new Date().toLocaleDateString();
-            document.getElementById('profile-joined').textContent = joinedDate;
-            
-            // Set loyalty points
-            document.getElementById('loyalty-points').textContent = userData.loyaltyPoints || '0';
+        userData = JSON.parse(storedUserData);
+        return true;
+      }
+
+      function loadUserData() {
+        if (!userData) return;
+
+        // Update user name in header
+        document.getElementById("user-name").textContent =
+          userData.name || "User";
+
+        // Update welcome message
+        const welcomeMsg = document.getElementById("welcome-message");
+        welcomeMsg.textContent = `Good to see you again, ${
+          userData.name?.split(" ")[0] || "there"
+        }! Ready to order some delicious food?`;
+
+        // Update profile information
+        document.getElementById("profile-name").textContent =
+          userData.name || "N/A";
+        document.getElementById("profile-email").textContent =
+          userData.email || "N/A";
+        document.getElementById("profile-mobile").textContent = `${
+          userData.countryCode || ""
+        } ${userData.mobile || "N/A"}`;
+
+        // Update delivery location
+        const deliveryLocation = document.getElementById("delivery-location");
+        if (
+          userData.deliveryLocation === "Others" &&
+          userData.deliveryAddress
+        ) {
+          deliveryLocation.innerHTML = `<strong>${userData.deliveryLocation}</strong><br>${userData.deliveryAddress}`;
+        } else {
+          deliveryLocation.innerHTML = `<strong>${
+            userData.deliveryLocation || "Not set"
+          }</strong>`;
         }
 
-        async function loadOrderHistory() {
-            const orderList = document.getElementById('order-list');
-            
-            try {
-                // Simulate API call to get order history
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-                    },
-                    body: JSON.stringify({
-                        action: 'getOrderHistory',
-                        userId: userData.id
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success && result.orders && result.orders.length > 0) {
-                    displayOrders(result.orders);
-                    updateOrderSummary(result.orders);
-                } else {
-                    // Show sample orders for demo
-                    const sampleOrders = [
-                        {
-                            id: 'ORD001',
-                            items: 'Nasi Lemak Deluxe, Tom Yum Soup',
-                            restaurant: 'Local Flavors',
-                            total: 'RM 29.40',
-                            date: '2025-08-30',
-                            status: 'completed'
-                        },
-                        {
-                            id: 'ORD002',
-                            items: 'Premium Beef Burger',
-                            restaurant: 'Burger Palace',
-                            total: 'RM 25.90',
-                            date: '2025-08-25',
-                            status: 'completed'
-                        }
-                    ];
-                    displayOrders(sampleOrders);
-                    updateOrderSummary(sampleOrders);
-                }
-            } catch (error) {
-                console.error('Error loading order history:', error);
-                orderList.innerHTML = `
+        // Set member since date (use current date if not available)
+        const joinedDate =
+          userData.joinedDate || new Date().toLocaleDateString();
+        document.getElementById("profile-joined").textContent = joinedDate;
+
+        // Set loyalty points
+        document.getElementById("loyalty-points").textContent =
+          userData.loyaltyPoints || "0";
+      }
+
+      async function loadOrderHistory() {
+        const orderList = document.getElementById("order-list");
+
+        try {
+          // Simulate API call to get order history
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+            body: JSON.stringify({
+              action: "getOrderHistory",
+              userId: userData.id,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success && result.orders && result.orders.length > 0) {
+            displayOrders(result.orders);
+            updateOrderSummary(result.orders);
+          } else {
+            // Show sample orders for demo
+            const sampleOrders = [
+              {
+                id: "ORD001",
+                items: "Nasi Lemak Deluxe, Tom Yum Soup",
+                restaurant: "Local Flavors",
+                total: "RM 29.40",
+                date: "2025-08-30",
+                status: "completed",
+              },
+              {
+                id: "ORD002",
+                items: "Premium Beef Burger",
+                restaurant: "Burger Palace",
+                total: "RM 25.90",
+                date: "2025-08-25",
+                status: "completed",
+              },
+            ];
+            displayOrders(sampleOrders);
+            updateOrderSummary(sampleOrders);
+          }
+        } catch (error) {
+          console.error("Error loading order history:", error);
+          orderList.innerHTML = `
                     <div style="text-align: center; color: #666; padding: 2rem;">
                         <p>No orders found.</p>
                         <p>Start ordering to see your history here!</p>
                     </div>
                 `;
-                document.getElementById('order-summary').textContent = 'No orders yet. Time to place your first order!';
-            }
+          document.getElementById("order-summary").textContent =
+            "No orders yet. Time to place your first order!";
         }
+      }
 
-        function displayOrders(orders) {
-            const orderList = document.getElementById('order-list');
-            
-            if (orders.length === 0) {
-                orderList.innerHTML = `
+      function displayOrders(orders) {
+        const orderList = document.getElementById("order-list");
+
+        if (orders.length === 0) {
+          orderList.innerHTML = `
                     <div style="text-align: center; color: #666; padding: 2rem;">
                         <p>No orders found.</p>
                         <p>Start ordering to see your history here!</p>
                     </div>
                 `;
-                return;
-            }
-            
-            orderList.innerHTML = orders.map(order => `
+          return;
+        }
+
+        orderList.innerHTML = orders
+          .map(
+            (order) => `
                 <div class="order-item">
                     <div class="order-details">
                         <h4>Order #${order.id}</h4>
                         <p>${order.items}</p>
                         <div class="order-meta">
-                            📍 ${order.restaurant} • ${order.date} • ${order.total}
+                            📍 ${order.restaurant} • ${order.date} • ${
+              order.total
+            }
                         </div>
                     </div>
                     <div class="order-status status-${order.status}">
-                        ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        ${
+                          order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)
+                        }
                     </div>
                 </div>
-            `).join('');
-        }
+            `
+          )
+          .join("");
+      }
 
-        function updateOrderSummary(orders) {
-            const orderSummary = document.getElementById('order-summary');
-            const completedOrders = orders.filter(order => order.status === 'completed');
-            
-            if (completedOrders.length > 0) {
-                orderSummary.innerHTML = `
-                    You have completed <strong>${completedOrders.length}</strong> orders.<br>
-                    Last order: ${completedOrders[0]?.date || 'N/A'}
+      function updateOrderSummary(orders) {
+        const orderSummary = document.getElementById("order-summary");
+        const completedOrders = orders.filter(
+          (order) => order.status === "completed"
+        );
+
+        if (completedOrders.length > 0) {
+          orderSummary.innerHTML = `
+                    You have completed <strong>${
+                      completedOrders.length
+                    }</strong> orders.<br>
+                    Last order: ${completedOrders[0]?.date || "N/A"}
                 `;
-            } else {
-                orderSummary.textContent = 'No completed orders yet. Place your first order today!';
-            }
+        } else {
+          orderSummary.textContent =
+            "No completed orders yet. Place your first order today!";
         }
+      }
 
-        function updateAddress() {
-            // This would normally open a modal or redirect to an address update page
-            alert('Address update feature coming soon!');
+      function updateAddress() {
+        // This would normally open a modal or redirect to an address update page
+        alert("Address update feature coming soon!");
+      }
+
+      function showOrderHistory() {
+        // Scroll to order history section
+        document.querySelector(".order-history").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      function logout() {
+        if (confirm("Are you sure you want to logout?")) {
+          localStorage.removeItem("userToken");
+          localStorage.removeItem("userData");
+          localStorage.removeItem("selectedLocation");
+          localStorage.removeItem("selectedItem");
+          window.location.href = "index.html";
         }
+      }
 
-        function showOrderHistory() {
-            // Scroll to order history section
-            document.querySelector('.order-history').scrollIntoView({
-                behavior: 'smooth'
-            });
+      // Initialize dashboard
+      function initializeDashboard() {
+        if (checkAuthentication()) {
+          loadUserData();
+          loadOrderHistory();
         }
+      }
 
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('userToken');
-                localStorage.removeItem('userData');
-                localStorage.removeItem('selectedLocation');
-                localStorage.removeItem('selectedItem');
-                window.location.href = 'index.html';
-            }
-        }
-
-        // Initialize dashboard
-        function initializeDashboard() {
-            if (checkAuthentication()) {
-                loadUserData();
-                loadOrderHistory();
-            }
-        }
-
-        // Load dashboard when page is ready
-        document.addEventListener('DOMContentLoaded', initializeDashboard);
+      // Load dashboard when page is ready
+      document.addEventListener("DOMContentLoaded", initializeDashboard);
     </script>
-</body>
+  </body>
 </html>

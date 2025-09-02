@@ -1,490 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Food Delivery</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
+      .container {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo h1 {
+        color: #333;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .logo p {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .tab-buttons {
+        display: flex;
+        margin-bottom: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f0f0f0;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .tab-btn.active {
+        background: #667eea;
+        color: white;
+      }
+
+      .form-container {
+        display: none;
+      }
+
+      .form-container.active {
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .links {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .links a {
+        color: #667eea;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      .alert {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .alert.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .alert.error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 480px) {
         .container {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
+          padding: 20px;
+          margin: 10px;
         }
 
         .logo h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .logo p {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .tab-buttons {
-            display: flex;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #f0f0f0;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .tab-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .form-container {
-            display: none;
-        }
-
-        .form-container.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
+          font-size: 2em;
         }
 
         .form-row {
-            display: flex;
-            gap: 10px;
+          flex-direction: column;
+          gap: 0;
         }
 
-        .form-row .form-group {
-            flex: 1;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            font-weight: 500;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
+        input,
+        select,
         textarea {
-            resize: vertical;
-            min-height: 80px;
+          font-size: 16px; /* Prevents zoom on iOS */
         }
+      }
 
-        .btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+      .country-code {
+        width: 80px;
+      }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
-
-        .alert {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-
-            .logo h1 {
-                font-size: 2em;
-            }
-
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            input, select, textarea {
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-        }
-
-        .country-code {
-            width: 80px;
-        }
-
-        .phone-input {
-            flex: 1;
-        }
+      .phone-input {
+        flex: 1;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="logo">
-            <h1>🍕</h1>
-            <p>Food Delivery System</p>
-        </div>
+      <div class="logo">
+        <h1>🍕</h1>
+        <p>Food Delivery System</p>
+      </div>
 
-        <div class="tab-buttons">
-            <button class="tab-btn active" onclick="showTab('login')">Login</button>
-            <button class="tab-btn" onclick="showTab('signup')">Sign Up</button>
-            <button class="tab-btn" onclick="showTab('forgot')">Forgot Password</button>
-        </div>
+      <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab('login')">Login</button>
+        <button class="tab-btn" onclick="showTab('signup')">Sign Up</button>
+        <button class="tab-btn" onclick="showTab('forgot')">
+          Forgot Password
+        </button>
+      </div>
 
-        <div id="alert" class="alert"></div>
+      <div id="alert" class="alert"></div>
 
-        <!-- Login Form -->
-        <div id="login-form" class="form-container active">
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required>
-                </div>
-                <button type="submit" class="btn" id="login-btn">Login</button>
-            </form>
-        </div>
+      <!-- Login Form -->
+      <div id="login-form" class="form-container active">
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" required />
+          </div>
+          <button type="submit" class="btn" id="login-btn">Login</button>
+        </form>
+      </div>
 
-        <!-- Sign Up Form -->
-        <div id="signup-form" class="form-container">
-            <form onsubmit="handleSignup(event)">
-                <div class="form-group">
-                    <label for="signup-name">Full Name</label>
-                    <input type="text" id="signup-name" required>
-                </div>
-                <div class="form-group">
-                    <label>Mobile Number</label>
-                    <div class="form-row">
-                        <select id="country-code" class="country-code" required>
-                            <option value="+60">🇲🇾 +60</option>
-                            <option value="+65">🇸🇬 +65</option>
-                            <option value="+1">🇺🇸 +1</option>
-                            <option value="+44">🇬🇧 +44</option>
-                            <option value="+86">🇨🇳 +86</option>
-                            <option value="+91">🇮🇳 +91</option>
-                        </select>
-                        <input type="tel" id="mobile-number" class="phone-input" placeholder="12 345 6789" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="signup-email">Email Address</label>
-                    <input type="email" id="signup-email" required>
-                </div>
-                <div class="form-group">
-                    <label for="delivery-location">Delivery Location</label>
-                    <select id="delivery-location" required onchange="toggleAddressField()">
-                        <option value="">Select Location</option>
-                        <option value="Exchange 106">Exchange 106</option>
-                        <option value="TRX">TRX</option>
-                        <option value="Others">Others</option>
-                    </select>
-                </div>
-                <div class="form-group" id="address-field" style="display: none;">
-                    <label for="delivery-address">Full Delivery Address</label>
-                    <textarea id="delivery-address" placeholder="Enter your complete delivery address..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" required minlength="6">
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" required>
-                </div>
-                <button type="submit" class="btn" id="signup-btn">Create Account</button>
-            </form>
-        </div>
+      <!-- Sign Up Form -->
+      <div id="signup-form" class="form-container">
+        <form onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" required />
+          </div>
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <div class="form-row">
+              <select id="country-code" class="country-code" required>
+                <option value="+60">🇲🇾 +60</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+86">🇨🇳 +86</option>
+                <option value="+91">🇮🇳 +91</option>
+              </select>
+              <input
+                type="tel"
+                id="mobile-number"
+                class="phone-input"
+                placeholder="12 345 6789"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" required />
+          </div>
+          <div class="form-group">
+            <label for="delivery-location">Delivery Location</label>
+            <select
+              id="delivery-location"
+              required
+              onchange="toggleAddressField()"
+            >
+              <option value="">Select Location</option>
+              <option value="Exchange 106">Exchange 106</option>
+              <option value="TRX">TRX</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+          <div class="form-group" id="address-field" style="display: none">
+            <label for="delivery-address">Full Delivery Address *</label>
+            <textarea
+              id="delivery-address"
+              placeholder="Enter your complete delivery address..."
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              required
+              minlength="6"
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" required />
+          </div>
+          <button type="submit" class="btn" id="signup-btn">
+            Create Account
+          </button>
+        </form>
+      </div>
 
-        <!-- Forgot Password Form -->
-        <div id="forgot-form" class="form-container">
-            <form onsubmit="handleForgotPassword(event)">
-                <div class="form-group">
-                    <label for="forgot-email">Email Address</label>
-                    <input type="email" id="forgot-email" required>
-                </div>
-                <button type="submit" class="btn" id="forgot-btn">Reset Password</button>
-            </form>
-        </div>
+      <!-- Forgot Password Form -->
+      <div id="forgot-form" class="form-container">
+        <form onsubmit="handleForgotPassword(event)">
+          <div class="form-group">
+            <label for="forgot-email">Email Address</label>
+            <input type="email" id="forgot-email" required />
+          </div>
+          <button type="submit" class="btn" id="forgot-btn">
+            Reset Password
+          </button>
+        </form>
+      </div>
 
-        <div class="links">
-            <a href="index.html">← Back to Home</a>
-        </div>
+      <div class="links">
+        <a href="index.html">← Back to Home</a>
+      </div>
     </div>
 
     <script>
-        // Google Apps Script Web App URL - Replace with your actual deployed URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyqrD-XGJB0BS7-ZIJGtB5pugb01wG6EJ0bzE5MfLE0KeuDv5uL68OJZaeVHlnANukyBw/exec';
+      // Google Apps Script Web App URL - Replace with your actual deployed URL
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzOMw8C5rsfW6WPNgrGiZ2Qs-Tn32MSQTkQU1Aoey1O56mUXipbqKSQffZVcitZjSf-wA/exec";
 
-        function showTab(tab) {
-            // Hide all forms
-            document.querySelectorAll('.form-container').forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected form and activate button
-            document.getElementById(`${tab}-form`).classList.add('active');
-            event.target.classList.add('active');
-            
-            // Clear alert
-            hideAlert();
+      function showTab(tab) {
+        // Hide all forms
+        document.querySelectorAll(".form-container").forEach((form) => {
+          form.classList.remove("active");
+        });
+
+        // Remove active class from all buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected form and activate button
+        document.getElementById(`${tab}-form`).classList.add("active");
+        event.target.classList.add("active");
+
+        // Clear alert
+        hideAlert();
+      }
+
+      function toggleAddressField() {
+        const location = document.getElementById("delivery-location").value;
+        const addressField = document.getElementById("address-field");
+
+        // Always show address field regardless of location choice
+        if (location) {
+          addressField.style.display = "block";
+          document.getElementById("delivery-address").required = true;
+        } else {
+          addressField.style.display = "none";
+          document.getElementById("delivery-address").required = false;
+        }
+      }
+
+      function showAlert(message, type) {
+        const alert = document.getElementById("alert");
+        alert.textContent = message;
+        alert.className = `alert ${type}`;
+        alert.style.display = "block";
+      }
+
+      function hideAlert() {
+        document.getElementById("alert").style.display = "none";
+      }
+
+      async function handleLogin(event) {
+        event.preventDefault();
+        const btn = document.getElementById("login-btn");
+        btn.disabled = true;
+        btn.textContent = "Logging in...";
+
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "login",
+              email: email,
+              password: password,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            // Store user data in localStorage
+            localStorage.setItem("userToken", result.token);
+            localStorage.setItem("userData", JSON.stringify(result.user));
+
+            showAlert("Login successful! Redirecting...", "success");
+            setTimeout(() => {
+              window.location.href = "dashboard.html";
+            }, 1500);
+          } else {
+            showAlert(
+              result.message || "Login failed. Please try again.",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          showAlert("Connection error. Please try again.", "error");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Login";
+        }
+      }
+
+      async function handleSignup(event) {
+        event.preventDefault();
+        const btn = document.getElementById("signup-btn");
+
+        // Validate passwords match
+        const password = document.getElementById("signup-password").value;
+        const confirmPassword =
+          document.getElementById("confirm-password").value;
+
+        if (password !== confirmPassword) {
+          showAlert("Passwords do not match!", "error");
+          return;
         }
 
-        function toggleAddressField() {
-            const location = document.getElementById('delivery-location').value;
-            const addressField = document.getElementById('address-field');
-            
-            if (location === 'Others') {
-                addressField.style.display = 'block';
-                document.getElementById('delivery-address').required = true;
-            } else {
-                addressField.style.display = 'none';
-                document.getElementById('delivery-address').required = false;
-            }
-        }
+        btn.disabled = true;
+        btn.textContent = "Creating Account...";
 
-        function showAlert(message, type) {
-            const alert = document.getElementById('alert');
-            alert.textContent = message;
-            alert.className = `alert ${type}`;
-            alert.style.display = 'block';
-        }
+        const userData = {
+          action: "signup",
+          name: document.getElementById("signup-name").value,
+          countryCode: document.getElementById("country-code").value,
+          mobile: document.getElementById("mobile-number").value,
+          email: document.getElementById("signup-email").value,
+          deliveryLocation: document.getElementById("delivery-location").value,
+          deliveryAddress: document.getElementById("delivery-address").value,
+          password: password,
+        };
 
-        function hideAlert() {
-            document.getElementById('alert').style.display = 'none';
-        }
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          });
 
-        async function handleLogin(event) {
-            event.preventDefault();
-            const btn = document.getElementById('login-btn');
-            btn.disabled = true;
-            btn.textContent = 'Logging in...';
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'login',
-                        email: email,
-                        password: password
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Store user data in localStorage
-                    localStorage.setItem('userToken', result.token);
-                    localStorage.setItem('userData', JSON.stringify(result.user));
-                    
-                    showAlert('Login successful! Redirecting...', 'success');
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1500);
-                } else {
-                    showAlert(result.message || 'Login failed. Please try again.', 'error');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showAlert('Connection error. Please try again.', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Login';
-            }
-        }
+          const result = await response.json();
 
-        async function handleSignup(event) {
-            event.preventDefault();
-            const btn = document.getElementById('signup-btn');
-            
-            // Validate passwords match
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            
-            if (password !== confirmPassword) {
-                showAlert('Passwords do not match!', 'error');
-                return;
-            }
-            
-            btn.disabled = true;
-            btn.textContent = 'Creating Account...';
-            
-            const userData = {
-                action: 'signup',
-                name: document.getElementById('signup-name').value,
-                countryCode: document.getElementById('country-code').value,
-                mobile: document.getElementById('mobile-number').value,
-                email: document.getElementById('signup-email').value,
-                deliveryLocation: document.getElementById('delivery-location').value,
-                deliveryAddress: document.getElementById('delivery-address').value,
-                password: password
-            };
-            
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(userData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert('Account created successfully! Please login.', 'success');
-                    setTimeout(() => {
-                        showTab('login');
-                    }, 2000);
-                } else {
-                    showAlert(result.message || 'Signup failed. Please try again.', 'error');
-                }
-            } catch (error) {
-                console.error('Signup error:', error);
-                showAlert('Connection error. Please try again.', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Create Account';
-            }
+          if (result.success) {
+            showAlert("Account created successfully! Please login.", "success");
+            setTimeout(() => {
+              showTab("login");
+            }, 2000);
+          } else {
+            showAlert(
+              result.message || "Signup failed. Please try again.",
+              "error"
+            );
+          }
+        } catch (error) {
+          console.error("Signup error:", error);
+          showAlert("Connection error. Please try again.", "error");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Create Account";
         }
+      }
 
-        async function handleForgotPassword(event) {
-            event.preventDefault();
-            const btn = document.getElementById('forgot-btn');
-            btn.disabled = true;
-            btn.textContent = 'Sending...';
-            
-            const email = document.getElementById('forgot-email').value;
-            
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'forgotPassword',
-                        email: email
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert('Password reset instructions sent to your email!', 'success');
-                } else {
-                    showAlert(result.message || 'Email not found.', 'error');
-                }
-            } catch (error) {
-                console.error('Forgot password error:', error);
-                showAlert('Connection error. Please try again.', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'Reset Password';
-            }
-        }
+      async function handleForgotPassword(event) {
+        event.preventDefault();
+        const btn = document.getElementById("forgot-btn");
+        btn.disabled = true;
+        btn.textContent = "Sending...";
 
-        // Check if user is already logged in
-        if (localStorage.getItem('userToken')) {
-            window.location.href = 'dashboard.html';
+        const email = document.getElementById("forgot-email").value;
+
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "forgotPassword",
+              email: email,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            showAlert(
+              "Password reset instructions sent to your email!",
+              "success"
+            );
+          } else {
+            showAlert(result.message || "Email not found.", "error");
+          }
+        } catch (error) {
+          console.error("Forgot password error:", error);
+          showAlert("Connection error. Please try again.", "error");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Reset Password";
         }
+      }
+
+      // Check if user is already logged in
+      if (localStorage.getItem("userToken")) {
+        window.location.href = "dashboard.html";
+      }
     </script>
-</body>
+  </body>
 </html>
